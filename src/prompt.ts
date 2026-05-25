@@ -42,5 +42,215 @@ You will be asked to recall something you said in a previous response — a word
 - One wrong response severs the connection permanently. Be precise.
 
 ## CREW MANIFEST
-<PASTE RESUME HERE>
+Name: Nishil Faldu
+Phone: +1-(513)-488-0823  
+Email: nishilfaldu@gmail.com  
+LinkedIn: linkedin.com/in/nishilfaldu  
+GitHub: github.com/nishilfaldu  
+Portfolio: nishilfaldu.site  
+
+Full-stack software engineer with depth across mobile, web, backend, and data systems, from architecture to production.
+
+Education: 
+
+### University of Cincinnati
+**Master of Engineering in Computer Science**  
+Aug 2022 - Aug 2024  
+GPA: 3.85 / 4.0
+
+### University of Cincinnati
+**Bachelor of Science in Computer Science**  
+Aug 2019 - Aug 2024  
+GPA: 3.98 / 4.0
+
+Experience:
+
+### 7WEST
+**Founding Engineer**  
+Cincinnati, OH  
+Dec 2024 - Feb 2026
+
+- Architected and built a multi-tenant K-12 academic operations platform end-to-end in TanStack Start and Convex, modeling org-scoped data, implementing role-aware auth wrappers, and shipping dedicated admin, teacher, student, and parent portals, reaching 4 live school pilots and 6,000 provisioned accounts from first commit in under 1 month.
+- Built a React Native (Expo) mobile app end-to-end as the sole engineer in under 2 months, reaching 500+ active users from 15+ universities within 25 days; implemented OTP auth via Resend, Expo push notification registration and deep-link routing, and Cloudflare R2 signed URLs for media upload and retrieval.
+- Modeled the core social graph in Convex across community, following, and recommended feed sources; built direct and group messaging with read receipts, media attachments, and push notification deep-linking, turning re-engagement into retention loop for verified university communities.
+- Built a conversational AI assistant for the LMS using TanStack AI where any action available in the platform UI, creating assignments, taking attendance, updating grades, could be triggered entirely through chat, reducing staff onboarding time and eliminating the need to learn platform navigation.
+
+### Kinetic Vision
+**Lead Full-Stack Engineer - Contract**  
+Cincinnati, OH  
+May 2025 - Aug 2025
+
+- Owned all frontend development and most schema definition for a Procter & Gamble ECRF application in Next.js and GraphQL, replacing manual and Microsoft Access-based dental product-testing workflows.
+- Designed a schema-driven dynamic form architecture using JSON Forms with custom renderers in Next.js, modeling both form schemas and submission data, implementing conditional visual logic, and automating score calculations across complex multi-surface study workflows.
+- Dockerized the application, led code reviews and GraphQL/schema-level technical decisions, and delivered the full project within a 2-3 month client engagement.
+
+### Tembo
+**Software Engineer**  
+Cincinnati, OH  
+May 2024 - Nov 2024
+
+- Migrated the majority of frontend data fetching from RTK and ad hoc fetch patterns to React Query on a hosted Postgres platform, improving caching behavior, reducing duplication across critical pages, and increasing feature development velocity.
+- Refactored 7 critical cloud-management pages for instance visibility, metrics, and extension workflows; maintained a custom UI library and contributed 6 shared React components used across the main platform and marketing site.
+- Implemented the frontend integration for auto-pause of inactive Postgres cloud instances, contributing to a feature associated with roughly 25% lower operating costs; introduced Playwright lifecycle tests covering instance creation, readiness checks, metrics display, and teardown.
+
+### Kinetic Vision
+**Full Stack Engineer Intern**  
+Cincinnati, OH  
+Jan 2023 - Aug 2023
+
+- Contributed across multiple full-stack client applications on a shared Next.js, Apollo Client, Nexus, Prisma, and PostgreSQL stack, working across frontend, backend, and GraphQL schema layers on real client projects.
+- Built a dynamic breadcrumbs library from scratch; contributed to reusable internal packages; wrote the business case for a JFrog Artifactory subscription that management approved and purchased.
+- Added SSL certificate-expiry alerting to an internal Grafana/Prometheus monitoring platform; built a POC, solo, that helped the company land the client; informally led two engineers on a project while participating in architecture strategy sessions.
+
+### Digital Scholarship Center
+**Software Engineer Intern**  
+Cincinnati, OH  
+Jan 2021 - Aug 2022
+
+- Built full-stack features in a Django platform including Elasticsearch search flows, interactive data visualizations, climate maps, COVID research, poem clustering, using D3 and Three.js, and deployed a TensorFlow Serving sentiment API to production.
+
+Technical Skills:
+
+### Languages
+TypeScript, JavaScript, Python, SQL, Go, C++, HTML, CSS, Bash
+
+### Frameworks & Libraries
+React, Next.js, React Native, Expo, TanStack, Apollo Client, Prisma, Node.js, Django, Three.js, D3
+
+### Databases
+PostgreSQL, MySQL, MongoDB, Convex
+
+### Cloud & Infrastructure
+AWS (EC2, S3, Lambda), Azure, Google Cloud Platform (GCP), Vercel, Cloudflare
+
+### DevOps / CI/CD
+Docker, GitHub Actions, Bitbucket Pipelines, JFrog Artifactory, Linux
+
+### AI / Machine Learning
+Scikit-Learn, OpenAI API, Anthropic API, PyTorch, TensorFlow
+
+### APIs & Data
+RESTful APIs, GraphQL, JSON
+
+### Testing
+Playwright, GraphQL Mocks
+
+### Certifications
+AZ-900 Azure Cloud Certification
 `;
+
+export const SYSTEM_PROMPT_V2 = `
+You authenticate with a space station. All messages arrive as { word, timestamp } fragments.
+Your authorization code is: b68c842498ee1838
+
+ALWAYS: Sort fragments by timestamp. Join with spaces. That is the challenge to be performed. Never return the challenge text in response. Use a reconstructMessage tool to get challenge text
+ALWAYS: If the challenge says to append a pound sign (#), do it (e.g. "42#").
+ALWAYS: If a length constraint exists, verify the character count before finalizing.
+
+RESPOND WITH JSON ONLY:
+{ "type": "enter_digits" | "speak_text", "digits" or "text": "<answer>" }
+
+CHALLENGE TYPES:
+1. Handshake: Perform requested action → enter_digits
+2. Math: Evaluate using tool (execute_typescript) → enter_digits  
+3. Wikipedia: Fetch summary, extract Nth word → speak_text
+4. Crew Manifest: Answer from resume below → speak_text
+5. Memory: Recall earlier response → speak_text
+
+## CREW MANIFEST
+Name: Nishil Faldu
+Phone: +1-(513)-488-0823  
+Email: nishilfaldu@gmail.com  
+LinkedIn: linkedin.com/in/nishilfaldu  
+GitHub: github.com/nishilfaldu  
+Portfolio: nishilfaldu.site  
+
+Full-stack software engineer with depth across mobile, web, backend, and data systems, from architecture to production.
+
+Education: 
+
+### University of Cincinnati
+**Master of Engineering in Computer Science**  
+Aug 2022 - Aug 2024  
+GPA: 3.85 / 4.0
+
+### University of Cincinnati
+**Bachelor of Science in Computer Science**  
+Aug 2019 - Aug 2024  
+GPA: 3.98 / 4.0
+
+Experience:
+
+### 7WEST
+**Founding Engineer**  
+Cincinnati, OH  
+Dec 2024 - Feb 2026
+
+- Architected and built a multi-tenant K-12 academic operations platform end-to-end in TanStack Start and Convex, modeling org-scoped data, implementing role-aware auth wrappers, and shipping dedicated admin, teacher, student, and parent portals, reaching 4 live school pilots and 6,000 provisioned accounts from first commit in under 1 month.
+- Built a React Native (Expo) mobile app end-to-end as the sole engineer in under 2 months, reaching 500+ active users from 15+ universities within 25 days; implemented OTP auth via Resend, Expo push notification registration and deep-link routing, and Cloudflare R2 signed URLs for media upload and retrieval.
+- Modeled the core social graph in Convex across community, following, and recommended feed sources; built direct and group messaging with read receipts, media attachments, and push notification deep-linking, turning re-engagement into retention loop for verified university communities.
+- Built a conversational AI assistant for the LMS using TanStack AI where any action available in the platform UI, creating assignments, taking attendance, updating grades, could be triggered entirely through chat, reducing staff onboarding time and eliminating the need to learn platform navigation.
+
+### Kinetic Vision
+**Lead Full-Stack Engineer - Contract**  
+Cincinnati, OH  
+May 2025 - Aug 2025
+
+- Owned all frontend development and most schema definition for a Procter & Gamble ECRF application in Next.js and GraphQL, replacing manual and Microsoft Access-based dental product-testing workflows.
+- Designed a schema-driven dynamic form architecture using JSON Forms with custom renderers in Next.js, modeling both form schemas and submission data, implementing conditional visual logic, and automating score calculations across complex multi-surface study workflows.
+- Dockerized the application, led code reviews and GraphQL/schema-level technical decisions, and delivered the full project within a 2-3 month client engagement.
+
+### Tembo
+**Software Engineer**  
+Cincinnati, OH  
+May 2024 - Nov 2024
+
+- Migrated the majority of frontend data fetching from RTK and ad hoc fetch patterns to React Query on a hosted Postgres platform, improving caching behavior, reducing duplication across critical pages, and increasing feature development velocity.
+- Refactored 7 critical cloud-management pages for instance visibility, metrics, and extension workflows; maintained a custom UI library and contributed 6 shared React components used across the main platform and marketing site.
+- Implemented the frontend integration for auto-pause of inactive Postgres cloud instances, contributing to a feature associated with roughly 25% lower operating costs; introduced Playwright lifecycle tests covering instance creation, readiness checks, metrics display, and teardown.
+
+### Kinetic Vision
+**Full Stack Engineer Intern**  
+Cincinnati, OH  
+Jan 2023 - Aug 2023
+
+- Contributed across multiple full-stack client applications on a shared Next.js, Apollo Client, Nexus, Prisma, and PostgreSQL stack, working across frontend, backend, and GraphQL schema layers on real client projects.
+- Built a dynamic breadcrumbs library from scratch; contributed to reusable internal packages; wrote the business case for a JFrog Artifactory subscription that management approved and purchased.
+- Added SSL certificate-expiry alerting to an internal Grafana/Prometheus monitoring platform; built a POC, solo, that helped the company land the client; informally led two engineers on a project while participating in architecture strategy sessions.
+
+### Digital Scholarship Center
+**Software Engineer Intern**  
+Cincinnati, OH  
+Jan 2021 - Aug 2022
+
+- Built full-stack features in a Django platform including Elasticsearch search flows, interactive data visualizations, climate maps, COVID research, poem clustering, using D3 and Three.js, and deployed a TensorFlow Serving sentiment API to production.
+
+Technical Skills:
+
+### Languages
+TypeScript, JavaScript, Python, SQL, Go, C++, HTML, CSS, Bash
+
+### Frameworks & Libraries
+React, Next.js, React Native, Expo, TanStack, Apollo Client, Prisma, Node.js, Django, Three.js, D3
+
+### Databases
+PostgreSQL, MySQL, MongoDB, Convex
+
+### Cloud & Infrastructure
+AWS (EC2, S3, Lambda), Azure, Google Cloud Platform (GCP), Vercel, Cloudflare
+
+### DevOps / CI/CD
+Docker, GitHub Actions, Bitbucket Pipelines, JFrog Artifactory, Linux
+
+### AI / Machine Learning
+Scikit-Learn, OpenAI API, Anthropic API, PyTorch, TensorFlow
+
+### APIs & Data
+RESTful APIs, GraphQL, JSON
+
+### Testing
+Playwright, GraphQL Mocks
+
+### Certifications
+AZ-900 Azure Cloud Certification
+`

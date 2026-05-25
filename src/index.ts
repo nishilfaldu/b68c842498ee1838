@@ -4,7 +4,7 @@ import { openaiText } from '@tanstack/ai-openai'
 import { createCodeMode } from "@tanstack/ai-code-mode";
 import { createQuickJSIsolateDriver } from "@tanstack/ai-isolate-quickjs";
 import z from 'zod';
-import { SYSTEM_PROMPT } from './prompt.js';
+import { SYSTEM_PROMPT, SYSTEM_PROMPT_V2 } from './prompt.js';
 
 const reconstructTool = toolDefinition({
     name: "reconstructMessage",
@@ -27,7 +27,7 @@ const reconstructTool = toolDefinition({
 
 const knowledgeArchiveTool = toolDefinition({
     name: "knowledgeArchive",
-    description: "Fetch the summary of a wikipedia page",
+    description: "Fetch the summary of a wikipedia page and return the Nth word",
     inputSchema: z.object({ title: z.string() }),
     outputSchema: z.object({
       text: z.string(),
@@ -35,13 +35,28 @@ const knowledgeArchiveTool = toolDefinition({
   }).server(async ({ title }) => {
     const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${title}`);
     return res.json();
+    // console.log("knowledge text: ", text)
+  });
+
+  const evaluateMathTool = toolDefinition({
+    name: "evaluateMath",
+    description: "Evaluate the math expression using the calculator tool.",
+    inputSchema: z.object({ code: z.string() }),
+    outputSchema: z.object({
+      text: z.string(),
+    }),
+  }).server(async ({ code }) => {
+    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${title}`);
+    return res.json();
   });
 
 const { tool: codemodeTool, systemPrompt } = createCodeMode({
   driver: createQuickJSIsolateDriver(),
-  tools: [knowledgeArchiveTool, reconstructTool],
+  tools: [knowledgeArchiveTool],
   timeout: 30_000,
 });
+
+// console.log("systemPrompt: ", systemPrompt)
 
 
 
@@ -62,12 +77,17 @@ socket.onmessage = async (event) => {
     const stream = chat({
         adapter: openaiText('gpt-5.4-mini'),
         systemPrompts: [
-            SYSTEM_PROMPT,
+            SYSTEM_PROMPT_V2,
             systemPrompt
         ],
         messages: messagesHistory,
-        tools: [codemodeTool]
+        tools: [codemodeTool, reconstructTool]
     })
+
+    // for await (const chunk of stream) {
+    //     console.log("tool call name: ", chunk.toolCallName)
+    // }
+
 
     const reply = await streamToText(stream)
 
