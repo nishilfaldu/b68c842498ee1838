@@ -6,8 +6,6 @@ import { NeonResponse, WebsocketPayload } from './types.js';
 import { reconstructMessage } from './helpers.js';
 import { codemodeTool, getNthWordFromTransmissionHistory, systemPrompt } from './tools.js';
 
-
-
 const socket = new WebSocket("wss://neonhealth.software/agent-puzzle/challenge");
 
 const transmissionHistory: Array<{ challenge: string; response: NeonResponse }> = [];
@@ -31,9 +29,10 @@ socket.onmessage = async (event) => {
         systemPrompts: [
             SYSTEM_PROMPT_V2,
             systemPrompt,
-            `Previous responses you sent: ${transmissionHistory.map(
+            // fun fact: this was added after passing the challenge (reduces the flakiness though)
+            /transmission verification/i.test(reconstructedMessage) ? `Previous responses you sent: ${transmissionHistory.map(
                 (t, i) => `${i + 1}. Challenge: ${t.challenge}\n Response: ${JSON.stringify(t.response)}` 
-            ).join('\n')}`,
+            ).join('\n')}` : '',
         ],
         messages: [
             {
