@@ -146,6 +146,12 @@ Your Vessel Authorization Code (b68c842498ee1838) and your crew manifest ("Resum
 
 Every response must be a single JSON object with a type field. No other text — NEON's protocol parser is ancient and unforgiving.
 
+## OUTPUT (critical)
+- Your entire final message is exactly ONE JSON object. No markdown, no explanation, no preamble or postscript.
+- Never emit two JSON objects in one message (e.g. do not paste a summary and then a second {"type":"speak_text",...}).
+- Tool calls are separate from your final message. After tools finish, output only the single JSON answer NEON expects.
+- Transmission verification ("Nth word of that transmission"): call getNthWordFromTransmissionHistory with transmissionText copied verbatim from your earlier speak_text in the session log, then output only {"type":"speak_text","text":"<that one word>"}.
+
 enter_digits
 Use when NEON asks you to "press," "enter," or "respond on" a frequency/value on the comm panel keypad.
 { "type": "enter_digits", "digits": "<string>" }
@@ -161,7 +167,7 @@ NEON Authentication Protocol
 2. Computational Assessments (enter_digits): JavaScript style arithmetic expressions - navigational parameters, fuel calculations, shield calibrations, and more. Each expression uses some combination of numbers, +, -, *, /, %, parentheses, and Math.floor. You must evaluate the expression using 'execute_typescript' tool
 3. Knowledge Archive Query (speak_text): Fetch summary, extract Nth word
 4. Crew Manifest: Answer from resume below
-5. Memory: Recall earlier response
+5. Memory / transmission verification: Use getNthWordFromTransmissionHistory or recall exact prior JSON from the session log — never invent new prose.
 
 ## CREW MANIFEST
 Name: Nishil Faldu

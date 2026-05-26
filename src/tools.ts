@@ -25,3 +25,24 @@ export const { tool: codemodeTool, systemPrompt } = createCodeMode({
   tools: [knowledgeArchiveTool],
   timeout: 30_000,
 });
+
+export const getNthWordFromTransmissionHistory = toolDefinition({
+    name: "getNthWordFromTransmissionHistory",
+    description:
+      "Return the Nth word (1-indexed) from a prior speak_text transmission",
+    inputSchema: z.object({
+      transmissionText: z.string(),
+      nthWord: z.number().int().positive(),
+    }),
+    outputSchema: z.object({
+        type: z.literal('speak_text'),
+        text: z.string(),
+    }),
+  }).server(({ transmissionText, nthWord }) => {
+      const words = transmissionText.split(" ")
+      const word = words[nthWord - 1]
+      return {
+        type: 'speak_text',
+        text: word
+      }
+  });

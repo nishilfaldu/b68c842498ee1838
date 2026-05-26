@@ -4,7 +4,7 @@ import { openaiText } from '@tanstack/ai-openai'
 import { SYSTEM_PROMPT_V2 } from './prompt.js';
 import { NeonResponse, WebsocketPayload } from './types.js';
 import { reconstructMessage } from './helpers.js';
-import { codemodeTool, systemPrompt } from './tools.js';
+import { codemodeTool, getNthWordFromTransmissionHistory, systemPrompt } from './tools.js';
 
 
 
@@ -32,8 +32,8 @@ socket.onmessage = async (event) => {
             SYSTEM_PROMPT_V2,
             systemPrompt,
             `Previous responses you sent: ${transmissionHistory.map(
-                (t, i) => `${i + 1}. Challenge: ${t.challenge}\n Response: ${t.response}` 
-            ).join('\n')}`
+                (t, i) => `${i + 1}. Challenge: ${t.challenge}\n Response: ${JSON.stringify(t.response)}` 
+            ).join('\n')}`,
         ],
         messages: [
             {
@@ -41,16 +41,19 @@ socket.onmessage = async (event) => {
                 content: `Challenge: ${reconstructedMessage}`,
             }
         ],
-        tools: [codemodeTool]
+        tools: [codemodeTool, getNthWordFromTransmissionHistory]
     })
 
     const reply = await streamToText(stream)
 
     console.log(`reply: ${reply}\n`);
 
-    transmissionHistory.push({ challenge: reconstructedMessage, response: JSON.parse(reply) })
+    transmissionHistory.push({
+        challenge: reconstructedMessage,
+        response: JSON.parse(reply.trim()) as NeonResponse,
+    })
 
-    socket.send(reply);
+    socket.send(reply.trim());
 }
 
 socket.onerror = (error) => {
