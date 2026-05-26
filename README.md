@@ -43,6 +43,12 @@ npm run dev
 
 Runs the agent directly from `src/index.ts` with `tsx` and `nodemon`.
 
+Under the hood, this runs:
+
+```bash
+nodemon --exec tsx src/index.ts
+```
+
 ```bash
 npm run build
 ```
